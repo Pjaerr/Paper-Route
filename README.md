@@ -3,6 +3,7 @@ Global Game Jam 2018 Entry.
 
 Equally Made by:
 
+Joshua Jackson,
 Adam Stephenson,
 Aaron Taleghani,
 Benjamin Sparkes,
