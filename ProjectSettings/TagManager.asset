@@ -6,6 +6,8 @@ TagManager:
   tags:
   - LevelObject
   - Room
+  - Attic Key
+  - RoomTrigger
   layers:
   - Default
   - TransparentFX
