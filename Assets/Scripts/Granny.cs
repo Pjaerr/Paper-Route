@@ -129,9 +129,9 @@ they reach the point, set it to true. If hasReachedPoint is true, the cycle goes
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Room") //If the granny has walked through a trigger on the room's entrance
+        if (col.gameObject.tag == "RoomTrigger") //If the granny has walked through a trigger on the room's entrance
         {
-            points = col.gameObject.GetComponent<Room>().points; //Set the granny's points to the rooms points.
+            points = col.transform.parent.GetComponent<Room>().points; //Set the granny's points to the rooms points.
         }
     }
 }

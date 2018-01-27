@@ -18,11 +18,14 @@ public class Room : MonoBehaviour
     /*Take each child of the room object and store their transforms in points[].*/
     void storePoints()
     {
-        points = new Transform[trans.childCount];
+        points = new Transform[trans.childCount - 1];
 
         for (int i = 0; i < trans.childCount; i++)
         {
-            points[i] = trans.GetChild(i);
+            if (!(trans.GetChild(i).tag == "RoomTrigger"))
+            {
+                points[i] = trans.GetChild(i);
+            }
         }
     }
 }
