@@ -96,9 +96,9 @@ public class Granny : MonoBehaviour
     }
 
     /**Chooses a point randomly from the points[] array, when chosen set the (x, y, z) as a Vector3
-inside of nextPosition and then every frame use Vector3.movetowards() to move this object towards the 
-previously generated position and whilst they aren't at that point, set hasReachedPoint to false, and when
-they reach the point, set it to true. If hasReachedPoint is true, the cycle goes around again.*/
+    inside of nextPosition and then every frame use Vector3.movetowards() to move this object towards the 
+    previously generated position and whilst they aren't at that point, set hasReachedPoint to false, and when
+    they reach the point, set it to true. If hasReachedPoint is true, the cycle goes around again.*/
     void moveToNextPoint()
     {
         float step = speed * Time.deltaTime; //Frame rate independent movement.
