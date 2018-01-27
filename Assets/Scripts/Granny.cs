@@ -66,10 +66,9 @@ public class Granny : MonoBehaviour
     bool isRouteClear()
     {
         RaycastHit hit;
-        ray = new Ray(trans.position, forwardCube.position);
+        ray = new Ray(trans.position, trans.forward);
         if (Physics.Raycast(ray.origin, ray.direction, out hit, 500.0f))
         {
-
             if (hit.collider.tag == "LevelObject" || hit.collider.tag == "Wall")
             {
                 Debug.Log("obstable");
@@ -93,7 +92,9 @@ public class Granny : MonoBehaviour
         int index = rand.Next(0, points.Length);
 
         //Set the next position to be a position within points[] at that randomly generated number.
-        nextPosition = points[index].position;
+        nextPosition.x = points[index].position.x;
+        nextPosition.z = points[index].position.z;
+        nextPosition.y = 0;
     }
 
     /**Chooses a point randomly from the points[] array, when chosen set the (x, y, z) as a Vector3
@@ -132,11 +133,12 @@ public class Granny : MonoBehaviour
     {
         if (col.gameObject.tag == "RoomTrigger") //If the granny has walked through a trigger on the room's entrance
         {
-            int chance = rand.Next(0, 1);
+            int chance = rand.Next(0, 2);
 
             if (chance == 1)
             {
                 points = col.transform.parent.GetComponent<Room>().points; //Set the granny's points to the rooms points.
+                chooseRandomPosition();
             }
         }
     }

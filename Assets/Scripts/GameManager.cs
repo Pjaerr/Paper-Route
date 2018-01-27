@@ -6,6 +6,9 @@ public class GameManager : MonoBehaviour
 {
     static public GameManager singleton;
 
+    //References
+    [SerializeField] private Camera mainCam;
+
     //Player States
     [HideInInspector] public bool playerIsHidden = false;
     [HideInInspector] public bool playerHasBasementKey = false;
@@ -21,5 +24,10 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+    }
+
+    public void moveCameraTo(Vector3 pos)
+    {
+        mainCam.transform.position = pos;
     }
 }

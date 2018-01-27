@@ -6,11 +6,14 @@ public class Room : MonoBehaviour
 {
     [HideInInspector] public Transform[] points;
     private Transform trans;
+    [HideInInspector] public Transform cameraPoint;
+
 
 
     void Awake()
     {
         trans = GetComponent<Transform>();
+        cameraPoint = trans.GetChild(1);
         storePoints();
     }
 
