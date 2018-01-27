@@ -5,16 +5,23 @@ using UnityEngine;
 public class Granny : MonoBehaviour
 {
     //Attributes
-    [SerializeField] private int speed = 1;
+    [SerializeField]
+    private int speed = 5;
 
     //References
     private Transform trans; //This object's transform.
     private System.Random rand;
 
     //"AI" Stuff
-    [SerializeField] private Transform[] points; //The points (x, y, z) the object will choose from randomly.
+    [SerializeField]
+    private Transform[] points; //The points (x, y, z) the object will choose from randomly.
     private Vector3 nextPosition; //Where the randomly chosen point is stored until next generated.
     private bool hasReachedPoint = true;
+
+    private bool routeIsClear = false;
+
+    [SerializeField]
+    private Transform forwardCube;
 
     void Start()
     {
@@ -25,30 +32,50 @@ public class Granny : MonoBehaviour
 
     void Update()
     {
+        
+
+
         moveToNextPoint();
     }
 
+    void FixedUpdate()
+    {
+        trans.LookAt(nextPosition);
+        if (isRouteClear())
+        {
+            routeIsClear = true;
+        }
+        else
+        {
+            routeIsClear = false;
+        }
+    }
 
     /*
 		When raycasting to check if objects exist, if it hits something, go again if the thing it is hitting is 
 		tagged as LevelObject or Wall. 
 	*/
+    Ray ray;
 
     bool isRouteClear()
     {
         RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, nextPosition, out hit))
+        ray = new Ray(trans.position, forwardCube.position);
+        if (Physics.Raycast(ray.origin, ray.direction, out hit, 500.0f))
         {
-            if (hit.transform.tag == "LevelObject" || hit.transform.tag == "Wall")
+
+            if (hit.collider.tag == "LevelObject" || hit.collider.tag == "Wall")
             {
+                Debug.Log("obstable");
                 return false;
             }
             else
             {
                 return true;
             }
+
         }
+        Debug.DrawRay(ray.origin, ray.direction);
 
         return true;
     }
@@ -84,7 +111,7 @@ they reach the point, set it to true. If hasReachedPoint is true, the cycle goes
         {
             chooseRandomPosition();
 
-            while (!isRouteClear())
+            while (!routeIsClear)
             {
                 chooseRandomPosition();
             }
