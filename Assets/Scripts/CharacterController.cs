@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
+    //Attributes
+    [SerializeField] private int speed = 1;
 
-    // Use this for initialization
+
+    //References
+    private Rigidbody rb;
+
     void Start()
     {
-
-
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        rb = GetComponent<Rigidbody>();
     }
 }
