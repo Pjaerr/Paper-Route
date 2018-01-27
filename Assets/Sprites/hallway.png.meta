@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 4f7b18a40801c324e9428e95ece16fde
-timeCreated: 1517069541
+timeCreated: 1517076468
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -82,12 +82,12 @@ TextureImporter:
       name: hallway_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 27
         y: 0
-        width: 2094
+        width: 2035
         height: 1035
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

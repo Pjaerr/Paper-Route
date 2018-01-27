@@ -6,68 +6,114 @@ public class CharacterController : MonoBehaviour
 {
     //Attributes
     [SerializeField] private int speed = 5;
+    private bool isAbleToHide = false;
 
 
     //References
     private Rigidbody rb;
-
     private Transform trans;
-
     private Animator playerAnimator;
+    private Transform model;
+    [SerializeField] private SkinnedMeshRenderer meshRenderer;
+    private SpriteRenderer spriteRenderer;
 
-    public Transform model;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         playerAnimator = GetComponent<Animator>();
         trans = GetComponent<Transform>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-        //Setting Model as child
-        model = this.gameObject.transform.GetChild(0);
-
-        //Getting axis
-        var x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
-        var z = Input.GetAxis("Vertical") * Time.deltaTime * speed;
-        float Animspeed = Input.GetAxis("Horizontal") + Input.GetAxis("Vertical");
-        if ((Input.GetAxis("Horizontal") == 1 && Input.GetAxis("Vertical") == -1) || (Input.GetAxis("Horizontal") == -1 && Input.GetAxis("Vertical") == 1))
-            Animspeed = 1;
-
-        playerAnimator.SetFloat("Speed", Animspeed);
-        //Rotation of model
-        if (Input.GetAxis("Horizontal") < 0)
+        /*Temporary usage, don't need to constantly set it to false or true, but stops immeadiate issues*/
+        if (GameManager.singleton.playerIsHidden)
         {
-            model.transform.eulerAngles = new Vector3(0, -90, 0);
+            meshRenderer.enabled = false;
         }
-        else if (Input.GetAxis("Horizontal") > 0)
+        else
         {
-            model.transform.eulerAngles = new Vector3(0, 90, 0);
+            meshRenderer.enabled = true;
         }
 
-        if (Input.GetAxis("Vertical") < 0)
+
+        /*If the player is colliding with a hideable object and are pressing E */
+        if (isAbleToHide && Input.GetKeyDown(KeyCode.E))
         {
-            model.transform.eulerAngles = new Vector3(0, 180, 0);
+            hidePlayer(); //Hide them.
         }
-        else if (Input.GetAxis("Vertical") > 0)
+        /*Else, if they are hidden and pressing E, unhide them*/
+        else if (GameManager.singleton.playerIsHidden && Input.GetKeyDown(KeyCode.E))
         {
-            model.transform.eulerAngles = new Vector3(0, 0, 0);
+            hidePlayer(); //Unhide them.
         }
 
-        if (Input.GetAxis("Vertical") > 0 && Input.GetAxis("Horizontal") > 0)
-            model.transform.eulerAngles = new Vector3(0, 45, 0);
-        if (Input.GetAxis("Vertical") < 0 && Input.GetAxis("Horizontal") > 0)
-            model.transform.eulerAngles = new Vector3(0, 135, 0);
-        if (Input.GetAxis("Vertical") > 0 && Input.GetAxis("Horizontal") < 0)
-            model.transform.eulerAngles = new Vector3(0, -45, 0);
-        if (Input.GetAxis("Vertical") < 0 && Input.GetAxis("Horizontal") < 0)
-            model.transform.eulerAngles = new Vector3(0, -135, 0);
+        if (!GameManager.singleton.playerIsHidden)
+        {
+            //Setting Model as child
+            model = this.gameObject.transform.GetChild(0);
 
-        //Moving the player
-        transform.Translate(x, 0, z);
+            //Getting axis
+            var x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
+            var z = Input.GetAxis("Vertical") * Time.deltaTime * speed;
+            float Animspeed = Input.GetAxis("Horizontal") + Input.GetAxis("Vertical");
+            if ((Input.GetAxis("Horizontal") == 1 && Input.GetAxis("Vertical") == -1) || (Input.GetAxis("Horizontal") == -1 && Input.GetAxis("Vertical") == 1))
+                Animspeed = 1;
 
+            playerAnimator.SetFloat("Speed", Animspeed);
+            //Rotation of model
+            if (Input.GetAxis("Horizontal") < 0)
+            {
+                model.transform.eulerAngles = new Vector3(0, -90, 0);
+            }
+            else if (Input.GetAxis("Horizontal") > 0)
+            {
+                model.transform.eulerAngles = new Vector3(0, 90, 0);
+            }
+
+            if (Input.GetAxis("Vertical") < 0)
+            {
+                model.transform.eulerAngles = new Vector3(0, 180, 0);
+            }
+            else if (Input.GetAxis("Vertical") > 0)
+            {
+                model.transform.eulerAngles = new Vector3(0, 0, 0);
+            }
+
+            if (Input.GetAxis("Vertical") > 0 && Input.GetAxis("Horizontal") > 0)
+                model.transform.eulerAngles = new Vector3(0, 45, 0);
+            if (Input.GetAxis("Vertical") < 0 && Input.GetAxis("Horizontal") > 0)
+                model.transform.eulerAngles = new Vector3(0, 135, 0);
+            if (Input.GetAxis("Vertical") > 0 && Input.GetAxis("Horizontal") < 0)
+                model.transform.eulerAngles = new Vector3(0, -45, 0);
+            if (Input.GetAxis("Vertical") < 0 && Input.GetAxis("Horizontal") < 0)
+                model.transform.eulerAngles = new Vector3(0, -135, 0);
+
+            //Moving the player
+            transform.Translate(x, 0, z);
+        }
+    }
+
+    void hidePlayer()
+    {
+        GameManager.singleton.playerIsHidden = !GameManager.singleton.playerIsHidden;
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "Hideable")
+        {
+            isAbleToHide = true;
+        }
+    }
+    void OnCollisionExit(Collision col)
+    {
+        if (col.gameObject.tag == "Hideable")
+        {
+            isAbleToHide = false;
+        }
     }
 
     void OnTriggerEnter(Collider col)
@@ -75,6 +121,14 @@ public class CharacterController : MonoBehaviour
         if (col.gameObject.tag == "Room")
         {
             GameManager.singleton.moveCameraTo(col.gameObject.GetComponent<Room>().cameraPoint.position);
+            GameManager.singleton.playerRoomId = col.gameObject.GetComponent<Room>().roomId;
+        }
+
+        /*If player walks over a key, call its pickup function which sets playerHasAtticKey to true
+        and destroys the key object.*/
+        if (col.gameObject.tag == "Key")
+        {
+            col.gameObject.GetComponent<Collectible>().pickUp();
         }
     }
 }

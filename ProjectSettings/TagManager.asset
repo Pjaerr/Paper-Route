@@ -8,6 +8,9 @@ TagManager:
   - Room
   - Attic Key
   - RoomTrigger
+  - Granny
+  - Hideable
+  - Key
   layers:
   - Default
   - TransparentFX

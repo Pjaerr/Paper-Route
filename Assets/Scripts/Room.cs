@@ -8,7 +8,9 @@ public class Room : MonoBehaviour
     private Transform trans;
     [HideInInspector] public Transform cameraPoint;
 
+    public int roomId;
 
+    [SerializeField] private int[] adjacentRoomIds;
 
     void Awake()
     {
