@@ -8,7 +8,7 @@ public class Room : MonoBehaviour
     private Transform trans;
 
 
-    void Start()
+    void Awake()
     {
         trans = GetComponent<Transform>();
         storePoints();
@@ -23,6 +23,7 @@ public class Room : MonoBehaviour
         for (int i = 0; i < trans.GetChild(0).childCount; i++)
         {
             points[i] = trans.GetChild(0).GetChild(i);
+            Debug.Log(points[i]);
         }
     }
 }

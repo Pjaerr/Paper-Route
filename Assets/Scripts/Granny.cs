@@ -43,6 +43,7 @@ public class Granny : MonoBehaviour
     {
         if (points.Length > 0)
         {
+            Debug.Log("ya");
             trans.LookAt(nextPosition);
             if (isRouteClear())
             {
