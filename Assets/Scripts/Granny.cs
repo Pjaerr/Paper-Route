@@ -13,7 +13,7 @@ public class Granny : MonoBehaviour
     private System.Random rand;
 
     //"AI" Stuff
-    [SerializeField]
+    [SerializeField] private Room initialRoom;
     private Transform[] points; //The points (x, y, z) the object will choose from randomly.
     private Vector3 nextPosition; //Where the randomly chosen point is stored until next generated.
     private bool hasReachedPoint = true;
@@ -28,27 +28,32 @@ public class Granny : MonoBehaviour
         //Cache the references.
         trans = GetComponent<Transform>();
         rand = new System.Random();
+        points = initialRoom.points;
     }
 
     void Update()
     {
-        
-
-
-        moveToNextPoint();
+        if (points.Length > 0)
+        {
+            moveToNextPoint();
+        }
     }
 
     void FixedUpdate()
     {
-        trans.LookAt(nextPosition);
-        if (isRouteClear())
+        if (points.Length > 0)
         {
-            routeIsClear = true;
+            trans.LookAt(nextPosition);
+            if (isRouteClear())
+            {
+                routeIsClear = true;
+            }
+            else
+            {
+                routeIsClear = false;
+            }
         }
-        else
-        {
-            routeIsClear = false;
-        }
+
     }
 
     /*
@@ -119,5 +124,14 @@ they reach the point, set it to true. If hasReachedPoint is true, the cycle goes
 
         //Move this object towards the chosen position over time.
         trans.position = Vector3.MoveTowards(trans.position, nextPosition, step);
+    }
+
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Room") //If the granny has walked through a trigger on the room's entrance
+        {
+            points = col.gameObject.GetComponent<Room>().points; //Set the granny's points to the rooms points.
+        }
     }
 }
