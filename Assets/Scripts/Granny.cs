@@ -36,9 +36,18 @@ public class Granny : MonoBehaviour
 
     bool isRouteClear()
     {
-        if (Physics.Raycast(transform.position, nextPosition))
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, nextPosition, out hit))
         {
-            return false;
+            if (hit.transform.tag == "LevelObject" || hit.transform.tag == "Wall")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         return true;
