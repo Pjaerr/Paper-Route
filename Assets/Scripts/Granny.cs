@@ -20,9 +20,6 @@ public class Granny : MonoBehaviour
 
     private bool routeIsClear = false;
 
-    [SerializeField]
-    private Transform forwardCube;
-
     void Start()
     {
         //Cache the references.
@@ -43,7 +40,6 @@ public class Granny : MonoBehaviour
     {
         if (points.Length > 0)
         {
-            Debug.Log("ya");
             trans.LookAt(nextPosition);
             if (isRouteClear())
             {
@@ -71,7 +67,6 @@ public class Granny : MonoBehaviour
         {
             if (hit.collider.tag == "LevelObject" || hit.collider.tag == "Wall")
             {
-                Debug.Log("obstable");
                 return false;
             }
             else
@@ -105,27 +100,38 @@ public class Granny : MonoBehaviour
     {
         float step = speed * Time.deltaTime; //Frame rate independent movement.
 
-        if (trans.position == nextPosition) //This object is at the generated position.
+        if (!GameManager.singleton.isInSameRoomAsPlayer() || GameManager.singleton.playerIsHidden)
         {
-            hasReachedPoint = true;
-        }
-        else //This object is not at the generated position.
-        {
-            hasReachedPoint = false;
-        }
+            GameManager.singleton.grannyIsChasing = false;
 
-        if (hasReachedPoint)
-        {
-            chooseRandomPosition();
+            if (trans.position == nextPosition) //This object is at the generated position.
+            {
+                hasReachedPoint = true;
+            }
+            else //This object is not at the generated position.
+            {
+                hasReachedPoint = false;
+            }
 
-            while (!routeIsClear)
+            if (hasReachedPoint)
             {
                 chooseRandomPosition();
-            }
-        }
 
-        //Move this object towards the chosen position over time.
-        trans.position = Vector3.MoveTowards(trans.position, nextPosition, step);
+                while (!routeIsClear)
+                {
+                    chooseRandomPosition();
+                }
+            }
+
+            //Move this object towards the chosen position over time.
+            trans.position = Vector3.MoveTowards(trans.position, nextPosition, step);
+        }
+        else
+        {
+            GameManager.singleton.grannyIsChasing = true;
+            GameManager.singleton.lookAtPlayer(trans, 10.0f);
+            trans.position = Vector3.MoveTowards(trans.position, GameManager.singleton.playerTransform.position, step);
+        }
     }
 
 
@@ -138,7 +144,8 @@ public class Granny : MonoBehaviour
             if (chance == 1)
             {
                 points = col.transform.parent.GetComponent<Room>().points; //Set the granny's points to the rooms points.
-                chooseRandomPosition();
+                chooseRandomPosition();     //COULD MESS WITH RAYCASTING IF WE DECIDE TO USE IT.
+                GameManager.singleton.grannyRoomId = col.transform.parent.GetComponent<Room>().roomId;
             }
         }
     }

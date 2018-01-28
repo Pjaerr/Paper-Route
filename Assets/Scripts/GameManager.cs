@@ -7,12 +7,21 @@ public class GameManager : MonoBehaviour
     static public GameManager singleton;
 
     //References
-    [SerializeField] private Camera mainCam;
+    [SerializeField] private Camera mainCam; //Reference to the main camera.
 
-    //Player States
+    //Player Stuff
+    public Transform playerTransform; //Reference to the players transform.
+
+    //States
     [HideInInspector] public bool playerIsHidden = false;
-    [HideInInspector] public bool playerHasBasementKey = false;
     [HideInInspector] public bool playerHasAtticKey = false;
+    [HideInInspector] public bool playerHasWalkieTalkie = false;
+    [HideInInspector] public bool grannyIsChasing = false;
+
+
+    //Room stuff
+    [HideInInspector] public int playerRoomId = 0;
+    [HideInInspector] public int grannyRoomId = 1;
 
     void Awake()
     {
@@ -24,10 +33,32 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+
+        playerRoomId = 0;
+        grannyRoomId = 1;
     }
 
     public void moveCameraTo(Vector3 pos)
     {
         mainCam.transform.position = pos;
+    }
+
+    //True if both room ids match.
+    public bool isInSameRoomAsPlayer()
+    {
+        return (grannyRoomId == playerRoomId);
+    }
+
+    //Allows other objects to rotate to face the player without access to the player reference.
+    public void lookAtPlayer(Transform thisTransform, float rotationSpeed)
+    {
+        thisTransform.LookAt(playerTransform);
+    }
+
+
+    //Should be called when attic is reached.
+    public void gameEnd()
+    {
+
     }
 }
