@@ -2016,7 +2016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d183db21727f774ab792c1c53e168f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
+  speed: 5
   meshRenderer: {fileID: 796212664}
 --- !u!4 &941918940
 Transform:
@@ -3084,7 +3084,7 @@ Camera:
   far clip plane: 1000
   field of view: 94.9
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 16
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3883,9 +3883,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5792283e7d5cf0145a9914a4a99cc310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 7
   initialRoom: {fileID: 2029038438}
-  forwardCube: {fileID: 0}
 --- !u!1 &1953055201
 GameObject:
   m_ObjectHideFlags: 0

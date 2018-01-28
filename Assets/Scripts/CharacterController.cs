@@ -6,39 +6,25 @@ public class CharacterController : MonoBehaviour
 {
     //Attributes
     [SerializeField] private int speed = 5;
-    private bool isAbleToHide = false;
-
+    private bool isAbleToHide = false; //Set to true if touching a "Hideable" object.
 
     //References
-    private Rigidbody rb;
-    private Transform trans;
-    private Animator playerAnimator;
-    private Transform model;
-    [SerializeField] private SkinnedMeshRenderer meshRenderer;
-    private SpriteRenderer spriteRenderer;
-
+    private Rigidbody rb; //This player's rigidbody.
+    private Transform trans; //This player's transform.
+    private Animator playerAnimator; //This player's animator
+    private Transform model; //The object that holds the model of the boy. (Child of player).
+    [SerializeField] private SkinnedMeshRenderer meshRenderer; //Disabling hides the model.
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         playerAnimator = GetComponent<Animator>();
         trans = GetComponent<Transform>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        model = trans.GetChild(0);
     }
 
     void Update()
     {
-        /*Temporary usage, don't need to constantly set it to false or true, but stops immeadiate issues*/
-        if (GameManager.singleton.playerIsHidden)
-        {
-            meshRenderer.enabled = false;
-        }
-        else
-        {
-            meshRenderer.enabled = true;
-        }
-
-
         /*If the player is colliding with a hideable object and are pressing E */
         if (isAbleToHide && Input.GetKeyDown(KeyCode.E))
         {
@@ -50,10 +36,10 @@ public class CharacterController : MonoBehaviour
             hidePlayer(); //Unhide them.
         }
 
+        //If the player isn't hidden, allow them to move.
         if (!GameManager.singleton.playerIsHidden)
         {
-            //Setting Model as child
-            model = this.gameObject.transform.GetChild(0);
+            meshRenderer.enabled = true;
 
             //Getting axis
             var x = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
@@ -93,6 +79,10 @@ public class CharacterController : MonoBehaviour
 
             //Moving the player
             transform.Translate(x, 0, z);
+        }
+        else
+        {
+            meshRenderer.enabled = false;
         }
     }
 

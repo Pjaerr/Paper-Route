@@ -20,9 +20,6 @@ public class Granny : MonoBehaviour
 
     private bool routeIsClear = false;
 
-    [SerializeField]
-    private Transform forwardCube;
-
     void Start()
     {
         //Cache the references.
@@ -147,7 +144,7 @@ public class Granny : MonoBehaviour
             if (chance == 1)
             {
                 points = col.transform.parent.GetComponent<Room>().points; //Set the granny's points to the rooms points.
-                chooseRandomPosition();
+                chooseRandomPosition();     //COULD MESS WITH RAYCASTING IF WE DECIDE TO USE IT.
                 GameManager.singleton.grannyRoomId = col.transform.parent.GetComponent<Room>().roomId;
             }
         }
