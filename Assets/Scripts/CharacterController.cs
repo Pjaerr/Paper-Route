@@ -97,12 +97,22 @@ public class CharacterController : MonoBehaviour
         {
             isAbleToHide = true;
         }
+
+        if (col.gameObject.tag == "AtticDoor")
+        {
+            GameManager.singleton.playerAtAtticDoor = true;
+        }
     }
     void OnCollisionExit(Collision col)
     {
         if (col.gameObject.tag == "Hideable")
         {
             isAbleToHide = false;
+        }
+
+        if (col.gameObject.tag == "AtticDoor")
+        {
+            GameManager.singleton.playerAtAtticDoor = false;
         }
     }
 

@@ -148,5 +148,10 @@ public class Granny : MonoBehaviour
                 GameManager.singleton.grannyRoomId = col.transform.parent.GetComponent<Room>().roomId;
             }
         }
+
+        if (col.gameObject.tag == "Player")
+        {
+            GameManager.singleton.gameEndFail();
+        }
     }
 }

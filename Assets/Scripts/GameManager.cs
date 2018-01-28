@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +17,7 @@ public class GameManager : MonoBehaviour
     //States
     [HideInInspector] public bool playerIsHidden = false;
     [HideInInspector] public bool playerHasAtticKey = false;
+    [HideInInspector] public bool playerAtAtticDoor = false;
     [HideInInspector] public bool playerHasWalkieTalkie = false;
     [HideInInspector] public bool grannyIsChasing = false;
 
@@ -57,8 +60,14 @@ public class GameManager : MonoBehaviour
 
 
     //Should be called when attic is reached.
-    public void gameEnd()
+    public void gameEndSucceed()
     {
+        Debug.Log("Player has reached the attic.");
+    }
 
+    public void gameEndFail()
+    {
+        Debug.Log("Player has been caught");
+        SceneManager.LoadScene(1);
     }
 }
