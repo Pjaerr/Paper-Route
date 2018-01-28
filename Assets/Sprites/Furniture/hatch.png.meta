@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a96ac375aadfa714cba21e7ed72ef835
-timeCreated: 1517140449
+guid: 88e5125125551a64b848127d5e1d9585
+timeCreated: 1517148409
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Fridge_0
+    21300000: hatch_0
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -79,13 +79,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Fridge_0
+      name: hatch_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 514
-        height: 524
+        width: 385
+        height: 326
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -126,9 +126,10 @@ public class CharacterController : MonoBehaviour
 
         /*If player walks over a key, call its pickup function which sets playerHasAtticKey to true
         and destroys the key object.*/
-        if (col.gameObject.tag == "Key")
+        if (col.gameObject.tag == "Key" || col.gameObject.tag == "WalkieTalkie")
         {
             col.gameObject.GetComponent<Collectible>().pickUp();
         }
+
     }
 }
