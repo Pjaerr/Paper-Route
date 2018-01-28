@@ -16,9 +16,9 @@ public class Collectible : MonoBehaviour
     int index;
 
     void Start()
-    
+
     {
-        if (type == Type.Key)
+        if (type == Type.key)
         {
             index = Random.Range(0, GameManager.singleton.KeySpawn.Length);
             GetComponent<Transform>().position = GameManager.singleton.KeySpawn[index];

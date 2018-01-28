@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool playerHasWalkieTalkie = false;
     [HideInInspector] public bool grannyIsChasing = false;
 
-
     //Room stuff
     [HideInInspector] public int playerRoomId = 0;
     [HideInInspector] public int grannyRoomId = 1;

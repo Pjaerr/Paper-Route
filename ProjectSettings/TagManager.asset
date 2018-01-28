@@ -11,6 +11,7 @@ TagManager:
   - Granny
   - Hideable
   - Key
+  - GetGrabbedTrigger
   layers:
   - Default
   - TransparentFX
