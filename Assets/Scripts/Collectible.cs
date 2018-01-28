@@ -13,6 +13,19 @@ public class Collectible : MonoBehaviour
     [SerializeField] private Type type;
 
 
+    int index;
+
+    void Start()
+    
+    {
+        if (type == Type.Key)
+        {
+            index = Random.Range(0, GameManager.singleton.KeySpawn.Length);
+            GetComponent<Transform>().position = GameManager.singleton.KeySpawn[index];
+        }
+    }
+
+
     public void pickUp()
     {
         switch (type)
