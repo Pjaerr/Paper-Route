@@ -6,9 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public int roomCount = 0;
+    public Room[] rooms = new Room[6];
+
+    public Dialogue DialogueMessage;
     static public GameManager singleton;
 
     //References
+    [SerializeField] private GameObject PauseMenuPanel; //Reference to the panel for pause.
     [SerializeField] private Camera mainCam; //Reference to the main camera.
 
     //Player Stuff
@@ -23,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     //Room stuff
     [HideInInspector] public int playerRoomId = 0;
-    [HideInInspector] public int grannyRoomId = 1;
+    [HideInInspector] public int grannyRoomId = 2;
     public Transform[] KeySpawn;
 
 
@@ -39,7 +44,7 @@ public class GameManager : MonoBehaviour
         }
 
         playerRoomId = 0;
-        grannyRoomId = 1;
+        grannyRoomId = 2;
     }
 
     public void moveCameraTo(Vector3 pos)
@@ -60,6 +65,45 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public bool playerDanger = false;
+    // Update is called once per frame
+    void Update()
+    {
+        for (int i = 0; i < rooms.Length; i++)
+        {
+            if (rooms[i].roomId == playerRoomId)
+            {
+                for (int j = 0; j < rooms[i].adjacentRoomIds.Length; j++)
+                {
+                    if (grannyRoomId == rooms[i].adjacentRoomIds[j])
+                    {
+                        if (!playerDanger)
+                        {
+
+                            playerDanger = true;
+                            DialogueMessage.WomanNearby();
+                        }
+                    }
+                    else
+                    {
+                        playerDanger = false;
+                    }
+                }
+            }
+        }
+
+        if (playerHasAtticKey && playerAtAtticDoor)
+        {
+            gameEndSucceed();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseMenuPanel.SetActive(true);
+            Time.timeScale = 0;
+
+        }
+    }
     //Should be called when attic is reached.
     public void gameEndSucceed()
     {
@@ -67,12 +111,12 @@ public class GameManager : MonoBehaviour
 
         //DO END SCENE STUFF HERE.
 
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3);
     }
 
     public void gameEndFail()
     {
         Debug.Log("Player has been caught");
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 }

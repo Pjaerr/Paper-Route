@@ -10,13 +10,19 @@ public class Room : MonoBehaviour
 
     public int roomId;
 
-    [SerializeField] private int[] adjacentRoomIds;
+    public int[] adjacentRoomIds;
 
     void Awake()
     {
         trans = GetComponent<Transform>();
         cameraPoint = trans.GetChild(1);
         storePoints();
+    }
+
+    void Start()
+    {
+        GameManager.singleton.rooms[GameManager.singleton.roomCount] = this;
+        GameManager.singleton.roomCount++;
     }
 
 

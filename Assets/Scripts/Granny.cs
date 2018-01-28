@@ -22,14 +22,18 @@ public class Granny : MonoBehaviour
 
     void Start()
     {
+        points = new Transform[0];
         //Cache the references.
         trans = GetComponent<Transform>();
         rand = new System.Random();
         points = initialRoom.points;
+
+
     }
 
     void Update()
     {
+        Debug.DrawLine(transform.position, nextPosition, Color.red);
         if (points.Length > 0)
         {
             moveToNextPoint();

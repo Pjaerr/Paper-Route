@@ -31,9 +31,11 @@ public class Collectible : MonoBehaviour
         switch (type)
         {
             case Type.key:
-                GameManager.singleton.playerHasAtticKey = true;
-                break;
-
+                {
+                    GameManager.singleton.playerHasAtticKey = true;
+                    GameManager.singleton.DialogueMessage.HasKey();
+                    break;
+                }
             case Type.walkieTalkie:
                 GameManager.singleton.playerHasWalkieTalkie = true;
                 break;

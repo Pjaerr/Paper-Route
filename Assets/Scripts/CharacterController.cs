@@ -6,7 +6,7 @@ public class CharacterController : MonoBehaviour
 {
     //Scene Control
     [SerializeField] private bool isMainScene = true;
-    [SerializeField] private UI uiReference;
+    public UI uiReference;
 
 
     //Attributes
@@ -116,7 +116,10 @@ public class CharacterController : MonoBehaviour
 
         if (col.gameObject.tag == "AtticDoor")
         {
+
             GameManager.singleton.playerAtAtticDoor = true;
+            GameManager.singleton.DialogueMessage.AtticDoor();
+
         }
     }
     void OnCollisionExit(Collision col)
@@ -149,7 +152,7 @@ public class CharacterController : MonoBehaviour
 
         if (col.gameObject.tag == "GetGrabbedTrigger")
         {
-            //uiReference.grabbedIntoHouse();
+            uiReference.grabbedIntoHouse();
         }
     }
 }
