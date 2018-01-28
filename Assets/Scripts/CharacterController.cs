@@ -57,6 +57,8 @@ public class CharacterController : MonoBehaviour
         else
         {
             playerMovement();
+
+
         }
     }
 
@@ -153,6 +155,11 @@ public class CharacterController : MonoBehaviour
         if (col.gameObject.tag == "GetGrabbedTrigger")
         {
             uiReference.grabbedIntoHouse();
+        }
+
+        if (col.gameObject.tag == "Newspaper_Deliver")
+        {
+            col.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
 }
