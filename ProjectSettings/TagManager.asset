@@ -12,6 +12,8 @@ TagManager:
   - Hideable
   - Key
   - GetGrabbedTrigger
+  - WalkieTalkie
+  - Newspaper_Deliver
   layers:
   - Default
   - TransparentFX
