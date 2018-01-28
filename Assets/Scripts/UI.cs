@@ -20,12 +20,12 @@ public class UI : MonoBehaviour
 
     public void loadArtbook()
     {
-        SceneManager.LoadScene(5);
+        SceneManager.LoadScene(4);
     }
 
     public void loadEndScene()
     {
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene(3);
     }
 
     public void startGame()
