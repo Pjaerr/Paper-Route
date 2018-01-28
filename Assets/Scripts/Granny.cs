@@ -53,10 +53,8 @@ public class Granny : MonoBehaviour
 
     }
 
-    /*
-		When raycasting to check if objects exist, if it hits something, go again if the thing it is hitting is 
-		tagged as LevelObject or Wall. 
-	*/
+    /*When raycasting to check if objects exist, if it hits something, go again if the thing it is hitting is 
+	tagged as LevelObject or Wall.*/
     Ray ray;
 
     bool isRouteClear()

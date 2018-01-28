@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
     //Room stuff
     [HideInInspector] public int playerRoomId = 0;
     [HideInInspector] public int grannyRoomId = 0;
+    public Vector3[] KeySpawn;
+
 
     void Awake()
     {
@@ -36,6 +38,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+
+        DontDestroyOnLoad(this);
 
         playerRoomId = 0;
         grannyRoomId = 0;
@@ -63,6 +67,10 @@ public class GameManager : MonoBehaviour
     public void gameEndSucceed()
     {
         Debug.Log("Player has reached the attic.");
+
+        //DO END SCENE STUFF HERE.
+
+        SceneManager.LoadScene(2);
     }
 
     public void gameEndFail()
