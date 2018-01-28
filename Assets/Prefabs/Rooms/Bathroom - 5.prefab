@@ -299,6 +299,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1649324785171376
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4513357208955890}
+  m_Layer: 0
+  m_Name: cameraPoint (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1698266821610300
 GameObject:
   m_ObjectHideFlags: 1
@@ -379,7 +394,7 @@ GameObject:
   - component: {fileID: 212696984924435020}
   m_Layer: 0
   m_Name: Bathroom - 5
-  m_TagString: Untagged
+  m_TagString: Room
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -550,6 +565,19 @@ Transform:
   m_Father: {fileID: 4634271529389038}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4513357208955890
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1649324785171376}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 21.714348, y: 0.71426123, z: -13.940009}
+  m_LocalScale: {x: 14.285715, y: 14.285722, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4954664180241862}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!4 &4531592549298040
 Transform:
   m_ObjectHideFlags: 1
@@ -570,7 +598,7 @@ Transform:
   - {fileID: 4278660738814406}
   - {fileID: 4792198434508278}
   m_Father: {fileID: 4954664180241862}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4536650127501940
 Transform:
@@ -639,7 +667,7 @@ Transform:
   - {fileID: 4451391808801414}
   - {fileID: 4286441354498056}
   m_Father: {fileID: 4954664180241862}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4635926794341252
 Transform:
@@ -665,7 +693,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 4954664180241862}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4754937668933060
 Transform:
@@ -763,6 +791,7 @@ Transform:
   m_LocalScale: {x: 0.07, y: 0.07, z: 1}
   m_Children:
   - {fileID: 4789012165161654}
+  - {fileID: 4513357208955890}
   - {fileID: 4722338587898356}
   - {fileID: 4531592549298040}
   - {fileID: 4634271529389038}
