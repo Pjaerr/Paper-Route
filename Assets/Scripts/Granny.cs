@@ -134,6 +134,13 @@ public class Granny : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            GameManager.singleton.gameEndFail();
+        }
+    }
 
     void OnTriggerEnter(Collider col)
     {

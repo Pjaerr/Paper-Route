@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     //Room stuff
     [HideInInspector] public int playerRoomId = 0;
-    [HideInInspector] public int grannyRoomId = 1;
+    [HideInInspector] public int grannyRoomId = 0;
 
     void Awake()
     {
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         }
 
         playerRoomId = 0;
-        grannyRoomId = 1;
+        grannyRoomId = 0;
     }
 
     public void moveCameraTo(Vector3 pos)

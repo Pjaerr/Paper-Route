@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a60378413d31bfc4e9a3dcfaa187d614
-timeCreated: 1517134739
+guid: cd11d77e72d86624c982a30c66eefd4a
+timeCreated: 1517137833
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Purple_0
+    21300000: Light Blue Tiled_0
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -79,13 +79,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Purple_0
+      name: Light Blue Tiled_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 4085
-        height: 2853
+        x: 138
+        y: 200
+        width: 3779
+        height: 2525
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
