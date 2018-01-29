@@ -6,26 +6,34 @@ public class Room : MonoBehaviour
 {
     [HideInInspector] public Transform[] points;
     private Transform trans;
+    [HideInInspector] public Transform cameraPoint;
 
+    public int roomId;
+
+    public int[] adjacentRoomIds;
+
+    void Awake()
+    {
+        trans = GetComponent<Transform>();
+        cameraPoint = trans.GetChild(1);
+        storePoints();
+    }
 
     void Start()
     {
-        trans = GetComponent<Transform>();
-        storePoints();
+        GameManager.singleton.rooms[GameManager.singleton.roomCount] = this;
+        GameManager.singleton.roomCount++;
     }
 
 
     /*Take each child of the room object and store their transforms in points[].*/
     void storePoints()
     {
-        points = new Transform[trans.childCount - 1];
+        points = new Transform[trans.GetChild(0).childCount];
 
-        for (int i = 0; i < trans.childCount; i++)
+        for (int i = 0; i < trans.GetChild(0).childCount; i++)
         {
-            if (!(trans.GetChild(i).tag == "RoomTrigger"))
-            {
-                points[i] = trans.GetChild(i);
-            }
+            points[i] = trans.GetChild(0).GetChild(i);
         }
     }
 }

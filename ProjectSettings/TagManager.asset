@@ -4,10 +4,14 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - LevelObject
+  - Hideable
   - Room
-  - Attic Key
+  - LevelObject
   - RoomTrigger
+  - WalkieTalkie
+  - Key
+  - Granny
+  - AtticDoor
   layers:
   - Default
   - TransparentFX
