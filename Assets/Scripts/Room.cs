@@ -19,12 +19,6 @@ public class Room : MonoBehaviour
         storePoints();
     }
 
-    void Start()
-    {
-        GameManager.singleton.rooms[GameManager.singleton.roomCount] = this;
-        GameManager.singleton.roomCount++;
-    }
-
 
     /*Take each child of the room object and store their transforms in points[].*/
     void storePoints()

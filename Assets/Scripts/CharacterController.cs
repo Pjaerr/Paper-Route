@@ -131,6 +131,7 @@ public class CharacterController : MonoBehaviour
         if (col.gameObject.tag == "AtticDoor")
         {
             GameManager.singleton.playerAtAtticDoor = false;
+            isMainScene = false;
         }
     }
 
@@ -139,7 +140,7 @@ public class CharacterController : MonoBehaviour
         if (col.gameObject.tag == "Room")
         {
             GameManager.singleton.moveCameraTo(col.gameObject.GetComponent<Room>().cameraPoint.position);
-            GameManager.singleton.playerRoomId = col.gameObject.GetComponent<Room>().roomId;
+            GameManager.singleton.currentPlayerRoom = col.gameObject.GetComponent<Room>();
         }
 
         /*If player walks over a key, call its pickup function which sets playerHasAtticKey to true

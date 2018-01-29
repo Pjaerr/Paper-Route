@@ -37,8 +37,11 @@ public class Collectible : MonoBehaviour
                     break;
                 }
             case Type.walkieTalkie:
-                GameManager.singleton.playerHasWalkieTalkie = true;
-                break;
+                {
+                    GameManager.singleton.playerHasWalkieTalkie = true;
+                    GameManager.singleton.walkieTalkieImage.SetActive(true);
+                    break;
+                }
         }
 
         Destroy(this.gameObject);

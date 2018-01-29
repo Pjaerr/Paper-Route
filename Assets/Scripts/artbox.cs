@@ -20,19 +20,27 @@ public class artbox : MonoBehaviour
 
     void Update()
     {
-        if (index < images.Length)
+        if (index < images.Length && index >= 0)
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
                 images[index].gameObject.SetActive(false);
                 index++;
-                images[index].gameObject.SetActive(true);
+                if (index < images.Length)
+                {
+                    images[index].gameObject.SetActive(true);
+                }
+
             }
             else if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 images[index].gameObject.SetActive(false);
                 index--;
-                images[index].gameObject.SetActive(true);
+                if (index >= 0)
+                {
+                    images[index].gameObject.SetActive(true);
+                }
+
             }
         }
 

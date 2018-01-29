@@ -6,31 +6,40 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public int roomCount = 0;
-    public Room[] rooms = new Room[6];
-
-    public Dialogue DialogueMessage;
     static public GameManager singleton;
 
-    //References
-    [SerializeField] private GameObject PauseMenuPanel; //Reference to the panel for pause.
+    /*References*/
     [SerializeField] private Camera mainCam; //Reference to the main camera.
 
-    //Player Stuff
-    public Transform playerTransform; //Reference to the players transform.
+    //Audio
+    [SerializeField] private AudioSource normalAudio;
+    [SerializeField] private AudioSource chasingAudio;
+    [SerializeField] private AudioSource sadAudio;
 
-    //States
+    //UI
+    [SerializeField] private GameObject pauseMenu;
+    public Dialogue DialogueMessage;
+    private bool messageActive = false; //Is the dialogue box open?
+    public GameObject walkieTalkieImage;
+
+    /*Player*/
+    public Transform playerTransform; //Reference to the players transform.
+    public Room currentPlayerRoom;
     [HideInInspector] public bool playerIsHidden = false;
     [HideInInspector] public bool playerHasAtticKey = false;
     [HideInInspector] public bool playerAtAtticDoor = false;
     [HideInInspector] public bool playerHasWalkieTalkie = false;
+
+    /*Granny*/
+    public Room currentGrannyRoom;
     [HideInInspector] public bool grannyIsChasing = false;
 
-    //Room stuff
-    [HideInInspector] public int playerRoomId = 0;
-    [HideInInspector] public int grannyRoomId = 2;
+    /*Collectibles*/
     public Transform[] KeySpawn;
 
+
+    /*End Scene Stuff*/
+    public Transform atticCameraPoint;
 
     void Awake()
     {
@@ -42,9 +51,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
-
-        playerRoomId = 0;
-        grannyRoomId = 2;
     }
 
     public void moveCameraTo(Vector3 pos)
@@ -55,7 +61,7 @@ public class GameManager : MonoBehaviour
     //True if both room ids match.
     public bool isInSameRoomAsPlayer()
     {
-        return (grannyRoomId == playerRoomId);
+        return (currentGrannyRoom.roomId == currentPlayerRoom.roomId);
     }
 
     //Allows other objects to rotate to face the player without access to the player reference.
@@ -64,54 +70,95 @@ public class GameManager : MonoBehaviour
         thisTransform.LookAt(playerTransform);
     }
 
+    bool chaseAudioActive = false;
 
-    public bool playerDanger = false;
-    // Update is called once per frame
     void Update()
     {
-
-        for (int i = 0; i < rooms.Length; i++)
+        if (isEndScene)
         {
-            if (rooms[i].roomId == playerRoomId)
-            {
-                for (int j = 0; j < rooms[i].adjacentRoomIds.Length; j++)
-                {
-                    if (grannyRoomId == rooms[i].adjacentRoomIds[j])
-                    {
-                        if (!playerDanger)
-                        {
+            mainCam.transform.position = Vector3.Lerp(mainCam.transform.position, atticCameraPoint.position, 0.5f * Time.deltaTime);
+        }
 
-                            playerDanger = true;
-                            DialogueMessage.WomanNearby();
-                        }
-                    }
-                    else
-                    {
-                        playerDanger = false;
-                    }
+        if (grannyIsChasing && !chaseAudioActive)
+        {
+            chasingAudio.Play();
+            normalAudio.Stop();
+            chaseAudioActive = true;
+        }
+        else if (chaseAudioActive && !grannyIsChasing)
+        {
+            normalAudio.Play();
+            chasingAudio.Stop();
+            chaseAudioActive = false;
+        }
+
+        /*Loop through all adjacencies on the player's current room and if the room the
+        granny is currently in matches any of those rooms, she is nearby.*/
+        for (int i = 0; i < currentPlayerRoom.adjacentRoomIds.Length; i++)
+        {
+            if (currentGrannyRoom.roomId == currentPlayerRoom.adjacentRoomIds[i])
+            {
+                //If the dialogue box isn't open already
+                if (!messageActive)
+                {
+                    messageActive = true; //Tell other code it is open.
+                    DialogueMessage.WomanNearby(); //Trigger the granny nearby dialogue message.
                 }
+            }
+            else if (messageActive) //If dialogue box is open but the granny isn't near.
+            {
+                messageActive = false; //Tell other code the box is closed.
+                DialogueMessage.WomanNoLongerNearby(); //Close the dialogue box.
             }
         }
 
         if (playerHasAtticKey && playerAtAtticDoor)
         {
             gameEndSucceed();
+            playerHasAtticKey = false;
         }
+
+        //PAUSE MENU
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PauseMenuPanel.SetActive(true);
-            Time.timeScale = 0;
+            pauseMenu.SetActive(!pauseMenu.activeSelf); //Reverse pause menu's enabled/disabled state.
 
+            if (pauseMenu.activeSelf)
+            {
+                Time.timeScale = 0;
+            }
+            else
+            {
+                Time.timeScale = 1;
+            }
+        }
+
+        if (pauseMenu.activeSelf && Input.GetKeyDown(KeyCode.Q))
+        {
+            SceneManager.LoadScene(0);
         }
     }
+
+    bool isEndScene = false;
     //Should be called when attic is reached.
     public void gameEndSucceed()
     {
-        Debug.Log("Player has reached the attic.");
+        normalAudio.Stop();
+        chasingAudio.Stop();
+        sadAudio.Play();
+        isEndScene = true;
+        walkieTalkieImage.SetActive(false);
 
-        //DO END SCENE STUFF HERE.
 
+
+        playerTransform.position = new Vector3(0, 200, 0);
+        StartCoroutine(exitGame());
+    }
+
+    public IEnumerator exitGame()
+    {
+        yield return new WaitForSeconds(14);
         SceneManager.LoadScene(3);
     }
 

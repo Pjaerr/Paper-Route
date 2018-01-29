@@ -26,9 +26,7 @@ public class Granny : MonoBehaviour
         //Cache the references.
         trans = GetComponent<Transform>();
         rand = new System.Random();
-        points = initialRoom.points;
-
-
+        points = GameManager.singleton.currentGrannyRoom.points;
     }
 
     void Update()
@@ -154,7 +152,7 @@ public class Granny : MonoBehaviour
             {
                 points = col.transform.parent.GetComponent<Room>().points; //Set the granny's points to the rooms points.
                 chooseRandomPosition();     //COULD MESS WITH RAYCASTING IF WE DECIDE TO USE IT.
-                GameManager.singleton.grannyRoomId = col.transform.parent.GetComponent<Room>().roomId;
+                GameManager.singleton.currentGrannyRoom = col.transform.parent.GetComponent<Room>();
             }
         }
 

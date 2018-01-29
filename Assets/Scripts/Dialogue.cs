@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+/*Dialogue was made by Benjamin Sparkes with input from Aaron Teleghani.*/
+
 public class Dialogue : MonoBehaviour
 {
 
+    private Text DialogueMessageText;
     public GameObject Panel;
     public GameObject Walkie;
     public GameObject DialogueMessage;
@@ -18,6 +22,8 @@ public class Dialogue : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        DialogueMessageText = DialogueMessage.GetComponent<Text>();
+
         chatEvents = new List<string>();
 
         chatEvents.Add("Hey! Wake up! I need your help!");
@@ -35,7 +41,7 @@ public class Dialogue : MonoBehaviour
     public void HasKey()
     {
         Panel.SetActive(true);
-        DialogueMessage.GetComponent<Text>().text = chatEvents[6];
+        DialogueMessageText.text = chatEvents[6];
     }
 
     void ClosePanel()
@@ -47,7 +53,7 @@ public class Dialogue : MonoBehaviour
     {
 
         Panel.SetActive(true);
-        DialogueMessage.GetComponent<Text>().text = "*Incoming Transmission*";
+        DialogueMessageText.text = "*Incoming Transmission*";
     }
 
     public void AtticDoor()
@@ -55,7 +61,7 @@ public class Dialogue : MonoBehaviour
         if (GameManager.singleton.playerHasAtticKey == false) //player collision at attic door trigger && bool haskey = false
         {
             Panel.SetActive(true);
-            DialogueMessage.GetComponent<Text>().text = chatEvents[5];
+            DialogueMessageText.text = chatEvents[5];
         }
 
     }
@@ -64,7 +70,7 @@ public class Dialogue : MonoBehaviour
     {
         if (PanelActive == true)
         {
-            DialogueMessage.GetComponent<Text>().text = chatEvents[i];
+            DialogueMessageText.text = chatEvents[i];
             if ((i == 1 && GameManager.singleton.playerHasWalkieTalkie) || i < 1 || i >= 2)
             {
                 i++;
@@ -72,7 +78,7 @@ public class Dialogue : MonoBehaviour
         }
         if (GameManager.singleton.playerHasAtticKey)
         {
-            DialogueMessage.GetComponent<Text>().text = chatEvents[6];
+            DialogueMessageText.text = chatEvents[6];
 
         }
         if (i == 6)
@@ -81,16 +87,22 @@ public class Dialogue : MonoBehaviour
         }
 
     }
+
     public void WomanNearby()
     {
         Panel.SetActive(true);
-        DialogueMessage.GetComponent<Text>().text = "She's Nearby! Hide! (Press E to hide in a object)";
+        DialogueMessageText.text = "She's Nearby! Hide! (Press E to hide in a object)";
 
     }
-    // Update is called once per frame
+
+    public void WomanNoLongerNearby()
+    {
+        Panel.SetActive(false);
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             NextText();
         }
