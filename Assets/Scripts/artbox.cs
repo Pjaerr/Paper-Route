@@ -10,39 +10,28 @@ public class artbox : MonoBehaviour
 
     void Start()
     {
-        images = new Transform[transform.childCount];
+        images = new Transform[transform.GetChild(0).childCount];
 
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < transform.GetChild(0).childCount; i++)
         {
-            images[i] = transform.GetChild(i);
+            images[i] = transform.GetChild(0).GetChild(i);
         }
     }
 
     void Update()
     {
-        if (index < images.Length && index >= 0)
+
+        if (Input.GetKeyDown(KeyCode.RightArrow) && index < images.Length - 1)
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                images[index].gameObject.SetActive(false);
-                index++;
-                if (index < images.Length)
-                {
-                    images[index].gameObject.SetActive(true);
-                }
-
-            }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                images[index].gameObject.SetActive(false);
-                index--;
-                if (index >= 0)
-                {
-                    images[index].gameObject.SetActive(true);
-                }
-
-            }
+            images[index].gameObject.SetActive(false);
+            index++;
+            images[index].gameObject.SetActive(true);
         }
-
+        else if (Input.GetKeyDown(KeyCode.LeftArrow) && index > 0)
+        {
+            images[index].gameObject.SetActive(false);
+            index--;
+            images[index].gameObject.SetActive(true);
+        }
     }
 }
